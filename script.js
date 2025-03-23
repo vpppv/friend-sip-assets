@@ -1,7 +1,7 @@
 // Attendre que le DOM soit entièrement chargé
 document.addEventListener("DOMContentLoaded", () => {
   // Liste des mini-jeux disponibles
- const miniGames = [
+  const miniGames = [
     { id: 'roue', name: 'Roue', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a72711c0-0775-11f0-8d5b-0242ac110002-png-regular_image.png', rules: 'Faites tourner la roue et laissez le hasard prendre le dessus : donnez, buvez ou ayez la chance de tomber sur la case Joker !' },
     { id: 'mot-interdit', name: 'Mot interdit', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a4efdacc-0775-11f0-b6c0-0242ac110002-png-regular_image.png', rules: 'Une fois sur cette case, le joueur définit un mot interdit. Chaque nouveau mot interdit remplace le précédent. Celui qui se trompe boit 1 gorgée.' },
     { id: 'dos-a-dos', name: 'Dos à dos', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a2e4f190-0775-11f0-b6c0-0242ac110002-png-regular_image.png', rules: 'Deux joueurs dos à dos répondent aux questions de l’assemblée. Même réponse = l’assemblée boit. Sinon, eux boivent.' },
@@ -83,8 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   closePopupButtons.forEach(button => {
+    const popup = button.closest('.popup');
     button.addEventListener('click', () => {
-      const popup = button.closest('.popup');
       closePopup(popup);
     });
   });
