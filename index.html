@@ -9,50 +9,24 @@
 <body>
 
   <!-- POPUP D'ACCUEIL -->
-  <div class="popup-overlay active" id="overlay">
-    <div class="popup active">
+  <div class="popup-overlay" id="overlay">
+    <div class="popup" id="popup">
       <h2>Comment ça fonctionne ?</h2>
       <p>Construis ton jeu d’alcool personnalisé pour faire un cadeau inoubliable : choisis les mini-jeux que tu souhaites ajouter parmi ceux proposés à gauche de l’écran, et fais-les glisser directement sur les cases que tu souhaites sur le plateau de jeu à droite.</p>
-      <button data-close-button>Commencer</button>
+      <button id="close-popup">Commencer</button>
     </div>
   </div>
 
   <div class="container">
-    <!-- Mini-jeux à gauche -->
-    <div id="mini-games">
-      <!-- Injectés par JS -->
-    </div>
+    <div id="mini-games"></div>
 
-    <!-- Plateau à droite -->
     <div id="board">
-      <!-- Top row -->
+      <!-- Plateau : 20 cases -->
       <div class="board-cell" data-fixed="true">Départ</div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-
-      <!-- Right column -->
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div
-      ><div class="board-cell"></div>
-      <div class="board-cell"></div>
-
-      <!-- Bottom row (reversed) -->
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-
-      <!-- Left column (reversed) -->
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
-      <div class="board-cell"></div>
+      <div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div>
+      <div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div>
+      <div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div>
+      <div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div>
     </div>
   </div>
 
