@@ -7,38 +7,45 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- POPUPS -->
-  <div id="popup-container"></div>
+
+  <!-- POPUP D'ACCUEIL -->
+  <div class="popup-overlay active" id="overlay">
+    <div class="popup active">
+      <h2>Comment ça fonctionne ?</h2>
+      <p>Construis ton jeu d’alcool personnalisé pour faire un cadeau inoubliable : choisis les mini-jeux que tu souhaites ajouter parmi ceux proposés à gauche de l’écran, et fais-les glisser directement sur les cases que tu souhaites sur plateau de jeu à droite.</p>
+      <button data-close-button>Commencer</button>
+    </div>
+  </div>
 
   <div class="container">
     <!-- Mini-jeux à gauche -->
-    <div class="mini-games" id="miniGamesContainer">
-      <!-- Les mini-jeux seront injectés ici par JS -->
+    <div id="mini-games">
+      <!-- Injectés par JS -->
     </div>
 
     <!-- Plateau à droite -->
-    <div class="plateau">
-      <!-- Générer 20 cases dont la première est "Départ" -->
-      <div class="plateau-cell start" data-start="true">Départ</div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
-      <div class="plateau-cell"></div>
+    <div id="board">
+      <div class="board-cell" data-fixed="true">Départ</div>
+      <!-- 19 cases vides -->
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
     </div>
   </div>
 
