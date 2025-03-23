@@ -58,18 +58,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Popup : fermer quand on clique sur le bouton
-  document.querySelectorAll('[data-close-button]').forEach(button => {
-    button.addEventListener('click', () => {
-      document.getElementById('overlay').classList.remove('active');
-      document.querySelector('.popup').classList.remove('active');
-    });
-  });
-
-  // Fermer si on clique en dehors
-  const overlay = document.getElementById('overlay');
-  overlay.addEventListener('click', () => {
+ // Popup : fermer quand on clique sur le bouton
+document.querySelectorAll('[data-close-button]').forEach(button => {
+  button.addEventListener('click', () => {
     document.getElementById('overlay').classList.remove('active');
     document.querySelector('.popup').classList.remove('active');
   });
 });
+
+// Fermer si on clique en dehors
+const overlay = document.getElementById('overlay');
+overlay.addEventListener('click', () => {
+  const popup = document.querySelector('.popup');
+  if (popup && popup.classList.contains('active')) {
+    popup.classList.remove('active');
+    overlay.classList.remove('active');
+  }
+});
+
