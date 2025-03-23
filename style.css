@@ -57,7 +57,6 @@ body {
   grid-template-columns: repeat(6, 80px);
   grid-auto-rows: 80px;
   gap: 10px;
-  max-width: 520px;
 }
 
 .board-cell {
@@ -122,22 +121,4 @@ body {
 
 .popup button:hover {
   background: #4444ff;
-}
-
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-
-  #board {
-    grid-template-columns: repeat(5, 70px);
-  }
-
-  .mini-game,
-  .board-cell {
-    width: 70px;
-    height: 70px;
-  }
 }
