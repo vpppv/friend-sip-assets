@@ -1,0 +1,1 @@
+# friend-sip-assets
