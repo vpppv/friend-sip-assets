@@ -27,10 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const miniGamesList = document.getElementById('mini-games');
-  const boardCells = document.querySelectorAll('.board-cell');
   const trashZone = document.getElementById('trash-zone');
-  const saveBtn = document.getElementById('save-board');
 
+  // === Création des mini-jeux dans la liste de gauche ===
   miniGames.forEach(game => {
     const gameElement = document.createElement('div');
     gameElement.className = 'mini-game';
@@ -38,36 +37,47 @@ document.addEventListener("DOMContentLoaded", () => {
     gameElement.dataset.rules = game.rules;
     gameElement.setAttribute('draggable', true);
 
-    // Masquer la règle si clic
-    gameElement.addEventListener('click', () => {
-      gameElement.classList.add('clicked');
-    });
-
+    // ✅ Drag depuis la liste d’origine
     gameElement.addEventListener('dragstart', e => {
       e.dataTransfer.setData('text/plain', JSON.stringify(game));
-      const ghost = gameElement.cloneNode(true);
-      ghost.style.position = "absolute";
-      ghost.style.top = "-999px";
-      document.body.appendChild(ghost);
-      e.dataTransfer.setDragImage(ghost, 40, 40);
-      setTimeout(() => ghost.remove(), 0);
+      e.dataTransfer.effectAllowed = 'copy';
+
+      // ✅ Corrige le bug d'image déplacée trop grande
+      const dragIcon = gameElement.cloneNode(true);
+      dragIcon.style.position = "absolute";
+      dragIcon.style.top = "-999px";
+      dragIcon.style.left = "-999px";
+      document.body.appendChild(dragIcon);
+      e.dataTransfer.setDragImage(dragIcon, 40, 40);
+      setTimeout(() => dragIcon.remove(), 0);
     });
 
     miniGamesList.appendChild(gameElement);
   });
 
+  const boardCells = document.querySelectorAll('.board-cell');
+
+  // === Zone de jeu : chaque case devient une drop zone
   boardCells.forEach(cell => {
-    cell.addEventListener('dragover', e => e.preventDefault());
+    cell.addEventListener('dragover', e => {
+      e.preventDefault();
+    });
 
     cell.addEventListener('drop', e => {
       e.preventDefault();
+
+      // On vérifie s’il y a un jeu en cours de déplacement
       const dragging = document.querySelector('.dragging');
       if (dragging && dragging.parentElement.classList.contains('board-cell')) {
-        if (cell.firstChild) cell.removeChild(cell.firstChild);
+        // ✅ On le déplace simplement dans la nouvelle case
+        if (cell.firstChild) {
+          cell.removeChild(cell.firstChild);
+        }
         cell.appendChild(dragging);
         return;
       }
 
+      // Sinon, c’est un nouveau jeu venant de la gauche
       const data = e.dataTransfer.getData('text/plain');
       if (data) {
         const game = JSON.parse(data);
@@ -75,17 +85,21 @@ document.addEventListener("DOMContentLoaded", () => {
         clone.className = 'mini-game';
         clone.style.backgroundImage = `url(${game.image})`;
         clone.setAttribute('draggable', true);
+        // ⚠️ Pas de data-rules ici → pas d'affichage de la règle
 
+        // ✅ Redrag possible
         clone.addEventListener('dragstart', e => {
           e.dataTransfer.setData('custom-game', '');
           clone.classList.add('dragging');
           trashZone.classList.add('visible');
-          const ghost = clone.cloneNode(true);
-          ghost.style.position = "absolute";
-          ghost.style.top = "-999px";
-          document.body.appendChild(ghost);
-          e.dataTransfer.setDragImage(ghost, 40, 40);
-          setTimeout(() => ghost.remove(), 0);
+
+          const dragIcon = clone.cloneNode(true);
+          dragIcon.style.position = "absolute";
+          dragIcon.style.top = "-999px";
+          dragIcon.style.left = "-999px";
+          document.body.appendChild(dragIcon);
+          e.dataTransfer.setDragImage(dragIcon, 40, 40);
+          setTimeout(() => dragIcon.remove(), 0);
         });
 
         clone.addEventListener('dragend', () => {
@@ -93,12 +107,17 @@ document.addEventListener("DOMContentLoaded", () => {
           clone.classList.remove('dragging');
         });
 
-        if (cell.firstChild) cell.removeChild(cell.firstChild);
+        // Si la case a déjà un jeu, on le remplace
+        if (cell.firstChild) {
+          cell.removeChild(cell.firstChild);
+        }
+
         cell.appendChild(clone);
       }
     });
   });
 
+  // === Corbeille pour supprimer un jeu du plateau
   trashZone.addEventListener('dragover', e => {
     e.preventDefault();
     trashZone.classList.add('drag-over');
@@ -117,69 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
     trashZone.classList.remove('visible');
   });
 
-  // === Enregistrement local
-  saveBtn.addEventListener('click', () => {
-    const boardState = [];
-
-    boardCells.forEach((cell, index) => {
-      const game = cell.querySelector('.mini-game');
-      if (game) {
-        const bg = game.style.backgroundImage;
-        const gameData = miniGames.find(g => bg.includes(g.image));
-        if (gameData) {
-          boardState.push({ index, id: gameData.id });
-        }
-      }
-    });
-
-    localStorage.setItem('friendSipBoard', JSON.stringify(boardState));
-    const originalText = saveBtn.textContent;
-    saveBtn.textContent = '✅ Sauvegardé !';
-    saveBtn.disabled = true;
-    setTimeout(() => {
-      saveBtn.textContent = originalText;
-      saveBtn.disabled = false;
-    }, 2000);
-  });
-
-  // === Rechargement auto
-  const savedState = localStorage.getItem('friendSipBoard');
-  if (savedState) {
-    const parsed = JSON.parse(savedState);
-
-    parsed.forEach(slot => {
-      const cell = boardCells[slot.index];
-      const gameData = miniGames.find(g => g.id === slot.id);
-      if (cell && gameData) {
-        const clone = document.createElement('div');
-        clone.className = 'mini-game';
-        clone.style.backgroundImage = `url(${gameData.image})`;
-        clone.setAttribute('draggable', true);
-
-        clone.addEventListener('dragstart', e => {
-          e.dataTransfer.setData('custom-game', '');
-          clone.classList.add('dragging');
-          trashZone.classList.add('visible');
-          const ghost = clone.cloneNode(true);
-          ghost.style.position = "absolute";
-          ghost.style.top = "-999px";
-          document.body.appendChild(ghost);
-          e.dataTransfer.setDragImage(ghost, 40, 40);
-          setTimeout(() => ghost.remove(), 0);
-        });
-
-        clone.addEventListener('dragend', () => {
-          trashZone.classList.remove('visible');
-          clone.classList.remove('dragging');
-        });
-
-        if (cell.firstChild) cell.removeChild(cell.firstChild);
-        cell.appendChild(clone);
-      }
-    });
-  }
-
-  // === Popup
+  // === Popup d'accueil
   const closeBtn = document.getElementById("close-popup");
   const overlay = document.getElementById("overlay");
   const popup = document.getElementById("popup");
