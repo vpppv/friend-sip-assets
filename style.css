@@ -9,7 +9,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 40px;
-  padding: 80px 40px 40px 40px; /* ↑ Ajout d'espace en haut */
+  padding: 40px;
   max-width: 1200px;
   margin: auto;
   flex-wrap: wrap;
@@ -72,17 +72,7 @@ body {
   z-index: 10;
 }
 
-/* ✅ Règles visibles uniquement dans la colonne de gauche */
-.mini-game:hover::after,
-.mini-game:hover::before {
-  display: none;
-}
-#mini-games .mini-game:hover::after,
-#mini-games .mini-game:hover::before {
-  display: block;
-}
-
-/* ✅ Masquer l'infobulle après clic */
+/* Masquer l'infobulle après clic */
 .mini-game.clicked::after,
 .mini-game.clicked::before {
   display: none !important;
@@ -194,24 +184,6 @@ body {
   background-color: #ff5c5c;
   color: white;
   transform: translateX(-50%) scale(1.05);
-}
-
-/* ✅ BOUTON ENREGISTRER EN HAUT À DROITE */
-.save-wrapper {
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  z-index: 100;
-}
-
-#save-board {
-  padding: 10px 16px;
-  font-size: 15px;
-  border: none;
-  background-color: #5c5cff;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
 /* === RESPONSIVE MOBILE === */
