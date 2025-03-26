@@ -166,8 +166,14 @@ saveBtn.addEventListener('click', () => {
   });
 
   localStorage.setItem('friendSipBoard', JSON.stringify(boardState));
-  alert('Plateau enregistré 🎉');
-});
+  const originalText = saveBtn.textContent;
+saveBtn.textContent = '✅ Sauvegardé !';
+saveBtn.disabled = true;
+setTimeout(() => {
+  saveBtn.textContent = originalText;
+  saveBtn.disabled = false;
+}, 2000);
+
 
 // === RECHARGEMENT AUTOMATIQUE DU PLATEAU ===
 const savedState = localStorage.getItem('friendSipBoard');
