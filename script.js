@@ -53,11 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     miniGamesList.appendChild(gameElement);
- // ✅ Clique pour masquer la règle
-gameElement.addEventListener('click', () => {
-  gameElement.classList.add('clicked');
-});
-
+  });
 
   const boardCells = document.querySelectorAll('.board-cell');
 
