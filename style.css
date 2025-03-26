@@ -9,7 +9,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 40px;
-  padding: 80px 40px 40px 40px; /* <-- top augmenté ici */
+  padding: 40px;
   max-width: 1200px;
   margin: auto;
   flex-wrap: wrap;
@@ -205,21 +205,4 @@ body {
     font-size: 10px;
     width: 150px;
   }
-}
-
-.save-wrapper {
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  z-index: 100;
-}
-
-#save-board {
-  padding: 10px 16px;
-  font-size: 15px;
-  border: none;
-  background-color: #5c5cff;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
 }
