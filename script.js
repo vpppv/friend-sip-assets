@@ -35,10 +35,20 @@ document.addEventListener("DOMContentLoaded", () => {
     gameElement.style.backgroundImage = `url(${game.image})`;
     gameElement.dataset.rules = game.rules;
     gameElement.setAttribute('draggable', true);
+
     gameElement.addEventListener('dragstart', e => {
       e.dataTransfer.setData('text/plain', JSON.stringify(game));
       e.dataTransfer.effectAllowed = 'copy';
+
+      // Fix pour image fantôme propre
+      const ghost = gameElement.cloneNode(true);
+      ghost.style.position = 'absolute';
+      ghost.style.top = '-999px';
+      document.body.appendChild(ghost);
+      e.dataTransfer.setDragImage(ghost, 40, 40);
+      setTimeout(() => document.body.removeChild(ghost), 0);
     });
+
     miniGamesList.appendChild(gameElement);
   });
 
@@ -52,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cell.addEventListener('drop', e => {
       e.preventDefault();
       const data = e.dataTransfer.getData('text/plain');
-      if (data) {
+      if (data && !cell.firstChild) {
         const game = JSON.parse(data);
         const clone = document.createElement('div');
         clone.className = 'mini-game';
@@ -60,46 +70,37 @@ document.addEventListener("DOMContentLoaded", () => {
         clone.dataset.rules = game.rules;
         clone.setAttribute('draggable', true);
 
-        // Si déjà un jeu, on le remplace
-        if (cell.firstChild) {
-          cell.removeChild(cell.firstChild);
-        }
+        clone.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('custom-game', '');
+          e.dataTransfer.effectAllowed = 'move';
+          clone.classList.add('dragging');
 
-        // Ajout du drag des clones
-       const clone = document.createElement('div');
-clone.className = 'mini-game';
-clone.style.backgroundImage = `url(${game.image})`;
-clone.dataset.rules = game.rules;
-clone.setAttribute('draggable', true);
+          // Masquer le tooltip pendant le drag
+          clone.style.pointerEvents = 'none';
 
-// Ajout du drag sur le clone placé sur le plateau
-clone.addEventListener('dragstart', e => {
-  e.dataTransfer.setData('custom-game', '');
-  e.dataTransfer.setDragImage(clone, 40, 40);
-  clone.classList.add('dragging');
-  
-  // ➕ Affiche la corbeille après un mini-délai pour éviter conflit avec d'autres events
-  setTimeout(() => {
-    trashZone.classList.add('visible');
-  }, 0);
-});
+          // Image fantôme propre
+          const ghost = clone.cloneNode(true);
+          ghost.style.position = 'absolute';
+          ghost.style.top = '-999px';
+          document.body.appendChild(ghost);
+          e.dataTransfer.setDragImage(ghost, 40, 40);
+          setTimeout(() => document.body.removeChild(ghost), 0);
 
-clone.addEventListener('dragend', () => {
-  clone.classList.remove('dragging');
-  trashZone.classList.remove('visible');
-});
+          trashZone.classList.add('visible');
+        });
 
-// Si déjà un jeu, on le remplace
-if (cell.firstChild) {
-  cell.removeChild(cell.firstChild);
-}
+        clone.addEventListener('dragend', () => {
+          clone.classList.remove('dragging');
+          clone.style.pointerEvents = 'auto';
+          trashZone.classList.remove('visible');
+        });
 
-cell.appendChild(clone);
+        cell.appendChild(clone);
       }
     });
   });
 
-  // ✅ Suppression via corbeille
+  // CORBEILLE
   trashZone.addEventListener('dragover', e => {
     e.preventDefault();
     trashZone.classList.add('drag-over');
@@ -118,7 +119,7 @@ cell.appendChild(clone);
     trashZone.classList.remove('visible');
   });
 
-  // ✅ Fermer la popup
+  // FERMER LA POPUP
   const closeBtn = document.getElementById("close-popup");
   const overlay = document.getElementById("overlay");
   const popup = document.getElementById("popup");
