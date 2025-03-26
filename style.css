@@ -206,11 +206,3 @@ body {
     width: 150px;
   }
 }
-
-.save-wrapper {
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  z-index: 100;
-}
-
