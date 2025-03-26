@@ -135,6 +135,3 @@ if (closeBtn && overlay && popup) {
   });
 }
 
-  .mini-game.no-tooltip:hover::after {
-  display: none !important;
-}
