@@ -1,3 +1,5 @@
+let currentDraggedFromBoard = null;
+
 document.addEventListener("DOMContentLoaded", () => {
   const miniGames = [
     { id: 'roue', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a72711c0-0775-11f0-8d5b-0242ac110002-png-regular_image.png', rules: 'Faites tourner la roue et laissez le hasard décider !' },
@@ -36,18 +38,20 @@ document.addEventListener("DOMContentLoaded", () => {
     gameElement.dataset.rules = game.rules;
     gameElement.setAttribute('draggable', true);
 
-    gameElement.addEventListener('dragstart', e => {
-      e.dataTransfer.setData('text/plain', JSON.stringify(game));
-      e.dataTransfer.effectAllowed = 'copy';
+ gameElement.addEventListener('dragstart', e => {
+  currentDraggedFromBoard = null; // 🔁 on vient de la bibliothèque, pas du plateau
+  e.dataTransfer.setData('text/plain', JSON.stringify(game));
+  e.dataTransfer.effectAllowed = 'copy';
 
-      // Fix pour image fantôme propre
-      const ghost = gameElement.cloneNode(true);
-      ghost.style.position = 'absolute';
-      ghost.style.top = '-999px';
-      document.body.appendChild(ghost);
-      e.dataTransfer.setDragImage(ghost, 40, 40);
-      setTimeout(() => document.body.removeChild(ghost), 0);
-    });
+  // Fix image fantôme propre
+  const ghost = gameElement.cloneNode(true);
+  ghost.style.position = 'absolute';
+  ghost.style.top = '-999px';
+  document.body.appendChild(ghost);
+  e.dataTransfer.setDragImage(ghost, 40, 40);
+  setTimeout(() => document.body.removeChild(ghost), 0);
+});
+
 
     miniGamesList.appendChild(gameElement);
   });
