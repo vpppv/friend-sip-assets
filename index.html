@@ -12,7 +12,7 @@
   <div class="popup-overlay" id="overlay">
     <div class="popup" id="popup">
       <h2>Comment ça fonctionne ?</h2>
-      <p>Construis ton jeu d’alcool personnalisé pour faire un cadeau inoubliable : choisis les mini-jeux que tu souhaites ajouter parmi ceux proposés à gauche de l’écran, et fais-les glisser directement sur les cases que tu souhaites sur le plateau de jeu à droite.</p>
+      <p>Construis ton jeu d’alcool personnalisé pour faire un cadeau inoubliable : choisis les mini-jeux à gauche, et fais-les glisser sur le plateau à droite.</p>
       <button id="close-popup">Commencer</button>
     </div>
   </div>
@@ -21,38 +21,44 @@
     <!-- ✅ MINI-JEUX À GAUCHE -->
     <div id="mini-games"></div>
 
-    <!-- ✅ PLATEAU DE 20 CASES -->
-   <div id="board" class="square-board">
-  <div class="board-cell"></div>
-  <div class="board-cell"></div>
-  <div class="board-cell"></div>
-  <div class="board-cell"></div>
-  <div class="board-cell"></div>
+    <!-- ✅ PLATEAU 5x5 AVEC 16 CASES -->
+    <div id="board" class="square-board">
+      <div class="board-cell" data-fixed="true">Départ</div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
 
-  <div class="board-cell">20</div>
-  <div class="empty-cell"></div>
-  <div class="empty-cell"></div>
-  <div class="empty-cell"></div>
-  <div class="board-cell">7</div>
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
 
-  <div class="board-cell">19</div>
-  <div class="empty-cell"></div>
-  <div class="empty-cell"></div>
-  <div class="empty-cell"></div>
-  <div class="board-cell">8</div>
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
 
-  <div class="board-cell">18</div>
-  <div class="empty-cell"></div>
-  <div class="empty-cell"></div>
-  <div class="empty-cell"></div>
-  <div class="board-cell">9</div>
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
 
-  <div class="board-cell">16</div>
-  <div class="board-cell">15</div>
-  <div class="board-cell">14</div>
-  <div class="board-cell">13</div>
-  <div class="board-cell">11</div>
-</div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+    </div>
+  </div>
+
+  <!-- ✅ CORBEILLE -->
+  <div id="trash-zone" class="hidden">
+    🗑️ Glisse ici pour supprimer
+  </div>
 
   <script src="script.js"></script>
 </body>
