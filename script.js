@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
- const miniGames = [
+  const miniGames = [
     { id: 'roue', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a72711c0-0775-11f0-8d5b-0242ac110002-png-regular_image.png', rules: 'Faites tourner la roue et laissez le hasard décider !' },
     { id: 'mot-interdit', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a4efdacc-0775-11f0-b6c0-0242ac110002-png-regular_image.png', rules: 'Définis un mot interdit. Celui qui le dit boit !' },
     { id: 'dos-a-dos', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a2e4f190-0775-11f0-b6c0-0242ac110002-png-regular_image.png', rules: 'Deux joueurs dos à dos. Même réponse : les autres boivent. Sinon, eux !' },
@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   let currentDraggedFromBoard = null;
-
   const miniGamesList = document.getElementById('mini-games');
   const trashZone = document.getElementById('trash-zone');
+  const boardCells = document.querySelectorAll('.board-cell');
 
-  // Injecte les mini-jeux dans la bibliothèque
+  // Génère les mini-jeux dans la bibliothèque
   miniGames.forEach(game => {
     const gameElement = document.createElement('div');
     gameElement.className = 'mini-game';
@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
     gameElement.addEventListener('dragstart', e => {
       currentDraggedFromBoard = null;
       e.dataTransfer.setData('text/plain', JSON.stringify(game));
-      e.dataTransfer.effectAllowed = 'copy';
 
       const ghost = gameElement.cloneNode(true);
       ghost.style.position = 'absolute';
@@ -55,23 +54,18 @@ document.addEventListener("DOMContentLoaded", () => {
     miniGamesList.appendChild(gameElement);
   });
 
-  // Drag & drop sur les cases du plateau
-  const boardCells = document.querySelectorAll('.board-cell');
-
   boardCells.forEach(cell => {
     cell.addEventListener('dragover', e => e.preventDefault());
 
     cell.addEventListener('drop', e => {
       e.preventDefault();
 
-      // Déplacement plateau > plateau (si destination vide)
       if (!cell.firstChild && currentDraggedFromBoard) {
         cell.appendChild(currentDraggedFromBoard);
         currentDraggedFromBoard = null;
         return;
       }
 
-      // Drop depuis bibliothèque (si vide)
       const data = e.dataTransfer.getData('text/plain');
       if (data && !cell.firstChild) {
         const game = JSON.parse(data);
@@ -81,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
         clone.dataset.rules = game.rules;
         clone.setAttribute('draggable', true);
 
-        // Drag du clone sur le plateau
         clone.addEventListener('dragstart', e => {
           currentDraggedFromBoard = clone;
           clone.classList.add('dragging', 'no-tooltip');
@@ -107,7 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Zone corbeille pour supprimer un jeu
   trashZone.addEventListener('dragover', e => {
     e.preventDefault();
     trashZone.classList.add('drag-over');
@@ -126,7 +118,6 @@ document.addEventListener("DOMContentLoaded", () => {
     currentDraggedFromBoard = null;
   });
 
-  // Fermer la popup d'accueil
   const closeBtn = document.getElementById("close-popup");
   const overlay = document.getElementById("overlay");
   const popup = document.getElementById("popup");
