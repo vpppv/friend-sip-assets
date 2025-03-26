@@ -161,3 +161,8 @@ body {
   color: white;
   transform: translateX(-50%) scale(1.05);
 }
+
+.mini-game.no-tooltip:hover::after {
+  display: none !important;
+}
+
