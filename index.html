@@ -1,46 +1,67 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Friend-Sip</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Plateau de Mini-Jeux</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ✅ BOUTON ENREGISTRER EN HAUT À DROITE -->
-  <div class="save-wrapper">
-    <button id="save-board">💾 Enregistrer le plateau</button>
-  </div>
-
-  <!-- ✅ POPUP D'ACCUEIL -->
+  <!-- POPUP D'ACCUEIL -->
   <div class="popup-overlay" id="overlay">
     <div class="popup" id="popup">
       <h2>Comment ça fonctionne ?</h2>
-      <p>Construis ton jeu d’alcool personnalisé : choisis les mini-jeux à gauche, glisse-les sur le plateau à droite.</p>
+      <p>Construis ton jeu d’alcool personnalisé pour faire un cadeau inoubliable : choisis les mini-jeux à gauche, et fais-les glisser sur le plateau à droite.</p>
       <button id="close-popup">Commencer</button>
     </div>
   </div>
 
-  <!-- ✅ ZONE DE JEU -->
   <div class="container">
-    <!-- MINI-JEUX À GAUCHE -->
+    <!-- ✅ MINI-JEUX À GAUCHE -->
     <div id="mini-games"></div>
 
-    <!-- PLATEAU DE JEU -->
+    <!-- ✅ PLATEAU 5x5 AVEC 16 CASES -->
     <div id="board" class="square-board">
       <div class="board-cell" data-fixed="true">Départ</div>
-      <div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div>
-      <div class="board-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="board-cell"></div>
-      <div class="board-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="board-cell"></div>
-      <div class="board-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="board-cell"></div>
-      <div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
     </div>
   </div>
 
   <!-- ✅ CORBEILLE -->
-  <div id="trash-zone" class="hidden">🗑️ Glisse ici pour supprimer</div>
+  <div id="trash-zone" class="hidden">
+    🗑️ Glisse ici pour supprimer
+  </div>
 
-  <!-- ✅ SCRIPT -->
+  <button id="save-board" style="margin: 20px auto; display: block; padding: 12px 20px; font-size: 16px; border: none; background-color: #5c5cff; color: white; border-radius: 6px; cursor: pointer;">💾 Enregistrer le plateau</button>
+
   <script src="script.js"></script>
 </body>
+
 </html>
