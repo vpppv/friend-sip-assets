@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const trashZone = document.getElementById('trash-zone');
   const saveBtn = document.getElementById('save-board');
 
+  // Ajouter les mini-jeux à gauche
   miniGames.forEach(game => {
     const gameElement = document.createElement('div');
     gameElement.className = 'mini-game';
@@ -51,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
     gameElement.dataset.rules = game.rules;
     gameElement.setAttribute('draggable', true);
 
-    // Masquer la règle si clic
     gameElement.addEventListener('click', () => {
       gameElement.classList.add('clicked');
     });
@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     miniGamesList.appendChild(gameElement);
   });
 
+  // Drag & drop sur le plateau
   boardCells.forEach(cell => {
     cell.addEventListener('dragover', e => e.preventDefault());
 
@@ -112,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Corbeille
   trashZone.addEventListener('dragover', e => {
     e.preventDefault();
     trashZone.classList.add('drag-over');
@@ -130,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
     trashZone.classList.remove('visible');
   });
 
-  // === Enregistrement local
+  // Sauvegarde
   saveBtn.addEventListener('click', () => {
     const boardState = [];
 
@@ -155,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2000);
   });
 
-  // === Rechargement auto
+  // Rechargement à l’ouverture
   const savedState = localStorage.getItem('friendSipBoard');
   if (savedState) {
     const parsed = JSON.parse(savedState);
@@ -192,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // === Popup
+  // Popup fermeture
   const closeBtn = document.getElementById("close-popup");
   const overlay = document.getElementById("overlay");
   const popup = document.getElementById("popup");
