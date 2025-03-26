@@ -1,4 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
+  
+    // TEST BOUTON ENREGISTRER
+  const saveBtn = document.getElementById('save-board');
+  console.log("Test bouton :", saveBtn);
+
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      console.log("🟢 Bouton cliqué !");
+    });
+  } else {
+    console.warn("🚨 Bouton non trouvé !");
+  }
+  
   const miniGames = [
     { id: 'roue', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a72711c0-0775-11f0-8d5b-0242ac110002-png-regular_image.png', rules: 'Faites tourner la roue et laissez le hasard décider !' },
     { id: 'mot-interdit', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a4efdacc-0775-11f0-b6c0-0242ac110002-png-regular_image.png', rules: 'Définis un mot interdit. Celui qui le dit boit !' },
