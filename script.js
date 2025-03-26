@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
           clone.classList.add('dragging');
 
           // Masquer le tooltip pendant le drag
-          clone.style.pointerEvents = 'none';
+          clone.classList.add('no-tooltip');
 
           // Image fantôme propre
           const ghost = clone.cloneNode(true);
