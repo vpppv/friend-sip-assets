@@ -66,18 +66,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Ajout du drag des clones
-        clone.addEventListener('dragstart', e => {
-          e.dataTransfer.setData('custom-game', '');
-          e.dataTransfer.setDragImage(clone, 40, 40);
-          clone.classList.add('dragging');
-          trashZone.classList.add('visible');
-        });
+       const clone = document.createElement('div');
+clone.className = 'mini-game';
+clone.style.backgroundImage = `url(${game.image})`;
+clone.dataset.rules = game.rules;
+clone.setAttribute('draggable', true);
 
-        clone.addEventListener('dragend', () => {
-          trashZone.classList.remove('visible');
-        });
+// Ajout du drag sur le clone placé sur le plateau
+clone.addEventListener('dragstart', e => {
+  e.dataTransfer.setData('custom-game', '');
+  e.dataTransfer.setDragImage(clone, 40, 40);
+  clone.classList.add('dragging');
+  
+  // ➕ Affiche la corbeille après un mini-délai pour éviter conflit avec d'autres events
+  setTimeout(() => {
+    trashZone.classList.add('visible');
+  }, 0);
+});
 
-        cell.appendChild(clone);
+clone.addEventListener('dragend', () => {
+  clone.classList.remove('dragging');
+  trashZone.classList.remove('visible');
+});
+
+// Si déjà un jeu, on le remplace
+if (cell.firstChild) {
+  cell.removeChild(cell.firstChild);
+}
+
+cell.appendChild(clone);
       }
     });
   });
