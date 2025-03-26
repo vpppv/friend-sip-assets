@@ -52,10 +52,11 @@ body {
   text-align: center;
 }
 
-#board {
+/* ✅ Nouveau style pour le plateau carré */
+#board.square-board {
   display: grid;
   grid-template-columns: repeat(6, 80px);
-  grid-auto-rows: 80px;
+  grid-template-rows: repeat(6, 80px);
   gap: 10px;
 }
 
@@ -66,15 +67,20 @@ body {
   border-radius: 8px;
   background-color: #fff;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .board-cell[data-fixed="true"] {
   background-color: #ffe26a;
   font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: #000;
+}
+
+.empty-cell {
+  width: 80px;
+  height: 80px;
 }
 
 .popup-overlay {
