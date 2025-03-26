@@ -1,235 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Plateau de Mini-Jeux - Friend-Sip</title>
-  <style>
-    /* === BASE === */
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: transparent;
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 40px;
-      padding: 80px 40px 40px 40px;
-      max-width: 1200px;
-      margin: auto;
-      flex-wrap: wrap;
-    }
-
-    /* === MINI-JEUX À GAUCHE === */
-    #mini-games {
-      flex: 1 1 100%;
-      max-width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: flex-start;
-    }
-
-    .mini-game {
-      width: 80px;
-      height: 80px;
-      border-radius: 8px;
-      cursor: grab;
-      border: 2px solid #ccc;
-      background-color: #fff;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      transition: transform 0.2s ease;
-    }
-
-    .mini-game:hover {
-      transform: scale(1.05);
-    }
-
-    /* INFOS DES RÈGLES */
-    .mini-game:hover::after {
-      content: attr(data-rules);
-      position: absolute;
-      bottom: 110%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #ffe990;
-      color: #343131;
-      padding: 6px 10px;
-      border-radius: 4px;
-      font-size: 12px;
-      white-space: normal;
-      z-index: 10;
-      width: 180px;
-      text-align: center;
-    }
-
-    .mini-game:hover::before {
-      content: '';
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 6px;
-      border-style: solid;
-      border-color: transparent transparent #ffe990 transparent;
-      z-index: 10;
-    }
-
-    /* ✅ Masquer flèche/règle sur le plateau */
-    .mini-game:hover::after,
-    .mini-game:hover::before {
-      display: none;
-    }
-
-    #mini-games .mini-game:hover::after,
-    #mini-games .mini-game:hover::before {
-      display: block;
-    }
-
-    .mini-game.clicked::after,
-    .mini-game.clicked::before {
-      display: none !important;
-    }
-
-    /* === PLATEAU DE JEU === */
-    #board.square-board {
-      display: grid;
-      grid-template-columns: repeat(5, 80px);
-      grid-template-rows: repeat(5, 80px);
-      gap: 10px;
-    }
-
-    .board-cell {
-      width: 80px;
-      height: 80px;
-      border: 2px dashed #aaa;
-      border-radius: 8px;
-      background-color: #fff;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .board-cell[data-fixed="true"] {
-      background-color: #ffe26a;
-      font-weight: bold;
-      color: #000;
-    }
-
-    .empty-cell {
-      width: 80px;
-      height: 80px;
-    }
-
-    /* === BOUTON ENREGISTRER === */
-    .save-wrapper {
-      position: absolute;
-      top: 20px;
-      right: 40px;
-      z-index: 100;
-    }
-
-    #save-board {
-      padding: 10px 16px;
-      font-size: 15px;
-      border: none;
-      background-color: #5c5cff;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    /* === POPUP D'ACCUEIL === */
-    .popup-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(10, 10, 10, 0.7);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .popup {
-      background: white;
-      border-radius: 8px;
-      padding: 30px;
-      text-align: center;
-      max-width: 400px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .popup h2 {
-      margin-top: 0;
-      font-size: 24px;
-    }
-
-    .popup p {
-      margin: 10px 0 20px;
-      font-size: 16px;
-    }
-
-    .popup button {
-      padding: 10px 20px;
-      font-size: 15px;
-      border: none;
-      border-radius: 4px;
-      background: #5c5cff;
-      color: white;
-      cursor: pointer;
-    }
-
-    .popup button:hover {
-      background: #4444ff;
-    }
-
-    /* === CORBEILLE === */
-    #trash-zone {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #ddd;
-      color: #333;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      z-index: 2000;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    #trash-zone.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    #trash-zone.drag-over {
-      background-color: #ff5c5c;
-      color: white;
-      transform: translateX(-50%) scale(1.05);
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Plateau de Mini-Jeux</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ✅ Bouton enregistrer -->
-  <div class="save-wrapper">
-    <button id="save-board">💾 Enregistrer le plateau</button>
-  </div>
-
-  <!-- ✅ Popup -->
+  <!-- POPUP D'ACCUEIL -->
   <div class="popup-overlay" id="overlay">
     <div class="popup" id="popup">
       <h2>Comment ça fonctionne ?</h2>
@@ -238,23 +16,52 @@
     </div>
   </div>
 
-  <!-- ✅ Conteneur principal -->
   <div class="container">
+    <!-- ✅ MINI-JEUX À GAUCHE -->
     <div id="mini-games"></div>
 
+    <!-- ✅ PLATEAU 5x5 AVEC 16 CASES -->
     <div id="board" class="square-board">
       <div class="board-cell" data-fixed="true">Départ</div>
-      <div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div>
-      <div class="board-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="board-cell"></div>
-      <div class="board-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="board-cell"></div>
-      <div class="board-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="empty-cell"></div><div class="board-cell"></div>
-      <div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div><div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
     </div>
   </div>
 
-  <!-- ✅ Corbeille -->
-  <div id="trash-zone">🗑️ Glisse ici pour supprimer</div>
+  <!-- ✅ CORBEILLE -->
+  <div id="trash-zone" class="hidden">
+    🗑️ Glisse ici pour supprimer
+  </div>
+
+  <button id="save-board" style="margin: 20px auto; display: block; padding: 12px 20px; font-size: 16px; border: none; background-color: #5c5cff; color: white; border-radius: 6px; cursor: pointer;">💾 Enregistrer le plateau</button>
 
   <script src="script.js"></script>
 </body>
+
 </html>
