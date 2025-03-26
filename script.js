@@ -98,7 +98,12 @@ document.addEventListener("DOMContentLoaded", () => {
           clone.style.pointerEvents = 'auto';
           trashZone.classList.remove('visible');
         });
-
+          // Si drop depuis un autre mini-jeu déjà placé sur le plateau
+    if (!cell.firstChild && currentDraggedFromBoard) {
+    cell.appendChild(currentDraggedFromBoard);
+    currentDraggedFromBoard = null;
+    return;
+  }
         cell.appendChild(clone);
       }
     });
