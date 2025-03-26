@@ -1,5 +1,3 @@
-let currentDraggedFromBoard = null;
-
 document.addEventListener("DOMContentLoaded", () => {
   const miniGames = [
     { id: 'roue', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a72711c0-0775-11f0-8d5b-0242ac110002-png-regular_image.png', rules: 'Faites tourner la roue et laissez le hasard décider !' },
@@ -28,115 +26,115 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: 'comptez', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a3a6cd7e-0775-11f0-8e80-0242ac110002-png-regular_image.png', rules: 'Comptez à plusieurs. Si doublon → tout le monde boit !' }
   ];
 
-  const miniGamesList = document.getElementById('mini-games');
-  const trashZone = document.getElementById('trash-zone');
+let currentDraggedFromBoard = null;
 
-  miniGames.forEach(game => {
-    const gameElement = document.createElement('div');
-    gameElement.className = 'mini-game';
-    gameElement.style.backgroundImage = `url(${game.image})`;
-    gameElement.dataset.rules = game.rules;
-    gameElement.setAttribute('draggable', true);
+const miniGamesList = document.getElementById('mini-games');
+const trashZone = document.getElementById('trash-zone');
 
- gameElement.addEventListener('dragstart', e => {
-  currentDraggedFromBoard = null; // 🔁 on vient de la bibliothèque, pas du plateau
-  e.dataTransfer.setData('text/plain', JSON.stringify(game));
-  e.dataTransfer.effectAllowed = 'copy';
+miniGames.forEach(game => {
+  const gameElement = document.createElement('div');
+  gameElement.className = 'mini-game';
+  gameElement.style.backgroundImage = `url(${game.image})`;
+  gameElement.dataset.rules = game.rules;
+  gameElement.setAttribute('draggable', true);
 
-  // Fix image fantôme propre
-  const ghost = gameElement.cloneNode(true);
-  ghost.style.position = 'absolute';
-  ghost.style.top = '-999px';
-  document.body.appendChild(ghost);
-  e.dataTransfer.setDragImage(ghost, 40, 40);
-  setTimeout(() => document.body.removeChild(ghost), 0);
+  gameElement.addEventListener('dragstart', e => {
+    currentDraggedFromBoard = null; // drag depuis bibliothèque
+    e.dataTransfer.setData('text/plain', JSON.stringify(game));
+    e.dataTransfer.effectAllowed = 'copy';
+
+    const ghost = gameElement.cloneNode(true);
+    ghost.style.position = 'absolute';
+    ghost.style.top = '-999px';
+    document.body.appendChild(ghost);
+    e.dataTransfer.setDragImage(ghost, 40, 40);
+    setTimeout(() => document.body.removeChild(ghost), 0);
+  });
+
+  miniGamesList.appendChild(gameElement);
 });
 
+const boardCells = document.querySelectorAll('.board-cell');
 
-    miniGamesList.appendChild(gameElement);
-  });
+boardCells.forEach(cell => {
+  cell.addEventListener('dragover', e => e.preventDefault());
 
-  const boardCells = document.querySelectorAll('.board-cell');
-
-  boardCells.forEach(cell => {
-    cell.addEventListener('dragover', e => {
-      e.preventDefault();
-    });
-
-    cell.addEventListener('drop', e => {
-      e.preventDefault();
-      const data = e.dataTransfer.getData('text/plain');
-      if (data && !cell.firstChild) {
-        const game = JSON.parse(data);
-        const clone = document.createElement('div');
-        clone.className = 'mini-game';
-        clone.style.backgroundImage = `url(${game.image})`;
-        clone.dataset.rules = game.rules;
-        clone.setAttribute('draggable', true);
-
-        clone.addEventListener('dragstart', e => {
-          e.dataTransfer.setData('custom-game', '');
-          e.dataTransfer.effectAllowed = 'move';
-          clone.classList.add('dragging');
-
-          // Masquer le tooltip pendant le drag
-          clone.classList.add('no-tooltip');
-
-          // Image fantôme propre
-          const ghost = clone.cloneNode(true);
-          ghost.style.position = 'absolute';
-          ghost.style.top = '-999px';
-          document.body.appendChild(ghost);
-          e.dataTransfer.setDragImage(ghost, 40, 40);
-          setTimeout(() => document.body.removeChild(ghost), 0);
-
-          trashZone.classList.add('visible');
-        });
-
-        clone.addEventListener('dragend', () => {
-          clone.classList.remove('dragging');
-          clone.style.pointerEvents = 'auto';
-          trashZone.classList.remove('visible');
-        });
-          // Si drop depuis un autre mini-jeu déjà placé sur le plateau
-    if (!cell.firstChild && currentDraggedFromBoard) {
-    cell.appendChild(currentDraggedFromBoard);
-    currentDraggedFromBoard = null;
-    return;
-  }
-        cell.appendChild(clone);
-      }
-    });
-  });
-
-  // CORBEILLE
-  trashZone.addEventListener('dragover', e => {
+  cell.addEventListener('drop', e => {
     e.preventDefault();
-    trashZone.classList.add('drag-over');
-  });
 
-  trashZone.addEventListener('dragleave', () => {
-    trashZone.classList.remove('drag-over');
-  });
-
-  trashZone.addEventListener('drop', () => {
-    const dragging = document.querySelector('.dragging');
-    if (dragging && dragging.parentElement.classList.contains('board-cell')) {
-      dragging.parentElement.removeChild(dragging);
+    // 🔁 Déplacement plateau → plateau (si destination vide)
+    if (!cell.firstChild && currentDraggedFromBoard) {
+      cell.appendChild(currentDraggedFromBoard);
+      currentDraggedFromBoard = null;
+      return;
     }
-    trashZone.classList.remove('drag-over');
-    trashZone.classList.remove('visible');
+
+    // 🎯 Drop depuis bibliothèque
+    const data = e.dataTransfer.getData('text/plain');
+    if (data && !cell.firstChild) {
+      const game = JSON.parse(data);
+      const clone = document.createElement('div');
+      clone.className = 'mini-game';
+      clone.style.backgroundImage = `url(${game.image})`;
+      clone.dataset.rules = game.rules;
+      clone.setAttribute('draggable', true);
+
+      clone.addEventListener('dragstart', e => {
+        currentDraggedFromBoard = clone;
+        clone.classList.add('dragging', 'no-tooltip');
+
+        const ghost = clone.cloneNode(true);
+        ghost.style.position = 'absolute';
+        ghost.style.top = '-999px';
+        document.body.appendChild(ghost);
+        e.dataTransfer.setDragImage(ghost, 40, 40);
+        setTimeout(() => document.body.removeChild(ghost), 0);
+
+        trashZone.classList.add('visible');
+      });
+
+      clone.addEventListener('dragend', () => {
+        clone.classList.remove('dragging', 'no-tooltip');
+        trashZone.classList.remove('visible');
+        currentDraggedFromBoard = null;
+      });
+
+      cell.appendChild(clone);
+    }
   });
-
-  // FERMER LA POPUP
-  const closeBtn = document.getElementById("close-popup");
-  const overlay = document.getElementById("overlay");
-  const popup = document.getElementById("popup");
-
-  if (closeBtn && overlay && popup) {
-    closeBtn.addEventListener("click", () => {
-      overlay.style.display = "none";
-      popup.style.display = "none";
-    });
-  }
 });
+
+// 🗑️ Corbeille
+trashZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  trashZone.classList.add('drag-over');
+});
+
+trashZone.addEventListener('dragleave', () => {
+  trashZone.classList.remove('drag-over');
+});
+
+trashZone.addEventListener('drop', () => {
+  const dragging = document.querySelector('.dragging');
+  if (dragging && dragging.parentElement.classList.contains('board-cell')) {
+    dragging.parentElement.removeChild(dragging);
+  }
+  trashZone.classList.remove('drag-over', 'visible');
+  currentDraggedFromBoard = null;
+});
+
+// 🪧 Fermer la popup
+const closeBtn = document.getElementById("close-popup");
+const overlay = document.getElementById("overlay");
+const popup = document.getElementById("popup");
+
+if (closeBtn && overlay && popup) {
+  closeBtn.addEventListener("click", () => {
+    overlay.style.display = "none";
+    popup.style.display = "none";
+  });
+}
+
+  .mini-game.no-tooltip:hover::after {
+  display: none !important;
+}
