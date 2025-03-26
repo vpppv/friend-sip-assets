@@ -67,11 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Ajout du drag des clones
         clone.addEventListener('dragstart', e => {
-          e.dataTransfer.setData('custom-game', '');
-          e.dataTransfer.setDragImage(clone, 40, 40);
-          clone.classList.add('dragging');
-          trashZone.classList.add('visible');
-        });
+  e.dataTransfer.setData('custom-game', '');
+  e.dataTransfer.setDragImage(clone, 40, 40);
+  clone.classList.add('dragging');
+
+  // Affiche la corbeille même si elle est déjà visible
+  setTimeout(() => {
+    trashZone.classList.add('visible');
+  }, 10);
+});
 
         clone.addEventListener('dragend', () => {
           trashZone.classList.remove('visible');
