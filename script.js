@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const miniGames = [
     { id: 'roue', image: 'https://cdn.b12.io/client_media/TvcPcmAO/a72711c0-0775-11f0-8d5b-0242ac110002-png-regular_image.png', rules: 'Faites tourner la roue et laissez le hasard décider !' },
@@ -54,10 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     miniGamesList.appendChild(gameElement);
-    // ✅ Clique pour masquer la règle
-gameElement.addEventListener('click', () => {
-  gameElement.classList.add('clicked');
-});
+  });
 
   const boardCells = document.querySelectorAll('.board-cell');
 
