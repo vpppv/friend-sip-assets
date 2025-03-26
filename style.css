@@ -1,3 +1,4 @@
+/* === BASE === */
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
@@ -14,6 +15,7 @@ body {
   flex-wrap: wrap;
 }
 
+/* === MINI-JEUX À GAUCHE === */
 #mini-games {
   flex: 1;
   min-width: 280px;
@@ -52,11 +54,11 @@ body {
   text-align: center;
 }
 
-/* ✅ Nouveau style pour le plateau carré */
+/* === PLATEAU DE JEU 5x5 === */
 #board.square-board {
   display: grid;
-  grid-template-columns: repeat(6, 80px);
-  grid-template-rows: repeat(6, 80px);
+  grid-template-columns: repeat(5, 80px);
+  grid-template-rows: repeat(5, 80px);
   gap: 10px;
 }
 
@@ -83,6 +85,7 @@ body {
   height: 80px;
 }
 
+/* === POPUP D'ACCUEIL === */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -127,4 +130,34 @@ body {
 
 .popup button:hover {
   background: #4444ff;
+}
+
+/* === CORBEILLE === */
+#trash-zone {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ddd;
+  color: #333;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 2000;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#trash-zone.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#trash-zone.drag-over {
+  background-color: #ff5c5c;
+  color: white;
+  transform: translateX(-50%) scale(1.05);
 }
