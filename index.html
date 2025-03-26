@@ -6,28 +6,60 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- POPUP D'ACCUEIL -->
+  <div class="popup-overlay" id="overlay">
+    <div class="popup" id="popup">
+      <h2>Comment ça fonctionne ?</h2>
+      <p>Construis ton jeu d’alcool personnalisé pour faire un cadeau inoubliable : choisis les mini-jeux à gauche, et fais-les glisser sur le plateau à droite.</p>
+      <button id="close-popup">Commencer</button>
+    </div>
+  </div>
+
   <div class="container">
-    <div id="mini-games">
-      <!-- Les mini-jeux seront générés ici par JavaScript -->
-    </div>
-    <div id="board">
-      <!-- Les cellules du plateau seront générées ici par JavaScript -->
+    <!-- ✅ MINI-JEUX À GAUCHE -->
+    <div id="mini-games"></div>
+
+    <!-- ✅ PLATEAU 5x5 AVEC 16 CASES -->
+    <div id="board" class="square-board">
+      <div class="board-cell" data-fixed="true">Départ</div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="empty-cell"></div>
+      <div class="board-cell"></div>
+
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
+      <div class="board-cell"></div>
     </div>
   </div>
 
-  <!-- Corbeille pour supprimer les mini-jeux du plateau -->
-  <div id="trash-bin" class="hidden">
-    <span>🗑️</span>
-  </div>
-
-  <div id="overlay" class="popup-overlay" style="display: none;">
-    <div id="popup" class="popup">
-      <h2>Règles du Mini-Jeu</h2>
-      <p id="popup-rules"></p>
-      <button id="close-popup">Fermer</button>
-    </div>
+  <!-- ✅ CORBEILLE -->
+  <div id="trash-zone" class="hidden">
+    🗑️ Glisse ici pour supprimer
   </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>
