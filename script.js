@@ -84,8 +84,6 @@ if (dragging && dragging.parentElement.classList.contains('board-cell')) {
   return;
 }
 
-      }
-
       // Sinon, c’est un nouveau jeu venant de la gauche
       const data = e.dataTransfer.getData('text/plain');
  if (data) {
