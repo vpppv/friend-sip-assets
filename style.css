@@ -215,8 +215,15 @@ body {
   min-width: 400px;
 }
 
+.container {
+  position: relative;
+}
+
 #top-bar {
-  margin-bottom: 10px;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 10;
 }
 
 #save-button {
