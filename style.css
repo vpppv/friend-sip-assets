@@ -9,7 +9,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 40px;
-  padding: 40px;
+  padding: 80px 40px 40px; /* ↑ ici on passe le padding top de 40px à 80px */
   max-width: 1200px;
   margin: auto;
   flex-wrap: wrap;
