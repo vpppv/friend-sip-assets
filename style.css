@@ -35,16 +35,22 @@ body {
   background-size: cover;
   background-position: center;
   position: relative;
+  transition: transform 0.2s ease;
 }
 
+.mini-game:hover {
+  transform: scale(1.05);
+}
+
+/* === INFOS DES RÈGLES === */
 .mini-game:hover::after {
   content: attr(data-rules);
   position: absolute;
   bottom: 110%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #000;
-  color: #fff;
+  background-color: #ffe990;
+  color: #343131;
   padding: 6px 10px;
   border-radius: 4px;
   font-size: 12px;
@@ -52,6 +58,24 @@ body {
   z-index: 10;
   width: 180px;
   text-align: center;
+}
+
+.mini-game:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent #ffe990 transparent;
+  z-index: 10;
+}
+
+/* Masquer l'infobulle après clic */
+.mini-game.clicked::after,
+.mini-game.clicked::before {
+  display: none !important;
 }
 
 /* === PLATEAU DE JEU 5x5 === */
@@ -160,4 +184,25 @@ body {
   background-color: #ff5c5c;
   color: white;
   transform: translateX(-50%) scale(1.05);
+}
+
+/* === RESPONSIVE MOBILE === */
+@media (max-width: 600px) {
+  .mini-game,
+  .board-cell,
+  .empty-cell {
+    width: 60px;
+    height: 60px;
+  }
+
+  #board.square-board {
+    grid-template-columns: repeat(5, 60px);
+    grid-template-rows: repeat(5, 60px);
+    gap: 8px;
+  }
+
+  .mini-game:hover::after {
+    font-size: 10px;
+    width: 150px;
+  }
 }
