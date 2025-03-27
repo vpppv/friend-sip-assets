@@ -72,53 +72,57 @@ gameElement.addEventListener('click', () => {
       e.preventDefault();
 
       // On vérifie s’il y a un jeu en cours de déplacement
-      const dragging = document.querySelector('.dragging');
-      if (dragging && dragging.parentElement.classList.contains('board-cell')) {
-        // ✅ On le déplace simplement dans la nouvelle case
-        if (cell.firstChild) {
-          cell.removeChild(cell.firstChild);
-        }
-        cell.appendChild(dragging);
-        return;
+const dragging = document.querySelector('.dragging');
+if (dragging && dragging.parentElement.classList.contains('board-cell')) {
+  // ✅ On le déplace simplement dans la nouvelle case SI elle est vide
+  if (cell.firstChild) {
+    // ❌ Ne rien faire si la case est déjà occupée
+    return;
+  }
+
+  cell.appendChild(dragging);
+  return;
+}
+
       }
 
       // Sinon, c’est un nouveau jeu venant de la gauche
       const data = e.dataTransfer.getData('text/plain');
-      if (data) {
-        const game = JSON.parse(data);
-        const clone = document.createElement('div');
-        clone.className = 'mini-game';
-        clone.style.backgroundImage = `url(${game.image})`;
-        clone.setAttribute('draggable', true);
-        // ⚠️ Pas de data-rules ici → pas d'affichage de la règle
+ if (data) {
+  const game = JSON.parse(data);
+  const clone = document.createElement('div');
+  clone.className = 'mini-game';
+  clone.style.backgroundImage = `url(${game.image})`;
+  clone.setAttribute('draggable', true);
 
-        // ✅ Redrag possible
-        clone.addEventListener('dragstart', e => {
-          e.dataTransfer.setData('custom-game', '');
-          clone.classList.add('dragging');
-          trashZone.classList.add('visible');
+  // ✅ Redrag possible
+  clone.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('custom-game', '');
+    clone.classList.add('dragging');
+    trashZone.classList.add('visible');
 
-          const dragIcon = clone.cloneNode(true);
-          dragIcon.style.position = "absolute";
-          dragIcon.style.top = "-999px";
-          dragIcon.style.left = "-999px";
-          document.body.appendChild(dragIcon);
-          e.dataTransfer.setDragImage(dragIcon, 40, 40);
-          setTimeout(() => dragIcon.remove(), 0);
-        });
+    const dragIcon = clone.cloneNode(true);
+    dragIcon.style.position = "absolute";
+    dragIcon.style.top = "-999px";
+    dragIcon.style.left = "-999px";
+    document.body.appendChild(dragIcon);
+    e.dataTransfer.setDragImage(dragIcon, 40, 40);
+    setTimeout(() => dragIcon.remove(), 0);
+  });
 
-        clone.addEventListener('dragend', () => {
-          trashZone.classList.remove('visible');
-          clone.classList.remove('dragging');
-        });
+  clone.addEventListener('dragend', () => {
+    trashZone.classList.remove('visible');
+    clone.classList.remove('dragging');
+  });
 
-        // Si la case a déjà un jeu, on le remplace
-        if (cell.firstChild) {
-          cell.removeChild(cell.firstChild);
-        }
+  // ✅ ✅ C'est ici qu'on empêche le drop si la case est occupée :
+  if (cell.firstChild) {
+    return;
+  }
 
-        cell.appendChild(clone);
-      }
+  cell.appendChild(clone);
+}
+
     });
   });
 
