@@ -119,7 +119,7 @@ if (dragging && dragging.parentElement.classList.contains('board-cell')) {
   }
 
   cell.appendChild(clone);
-}
+   }
 
     });
   });
@@ -212,7 +212,6 @@ if (savedConfig.length > 0) {
     }
     cell.appendChild(clone);
   });
-}
 
   
 });
