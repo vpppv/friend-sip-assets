@@ -21,11 +21,8 @@
   <div id="mini-games"></div>
 
   <!-- ✅ PLATEAU + BOUTON ENREGISTRER EN HAUT À DROITE -->
-  <div class="board-wrapper">
-    <div id="top-bar">
-      <button id="save-button">💾 Enregistrer</button>
-    </div>
-
+<div class="board-wrapper">
+  <div id="board" class="square-board">
     <!-- ✅ PLATEAU 5x5 AVEC 16 CASES -->
     <div id="board" class="square-board">
       <div class="board-cell" data-fixed="true">Départ</div>
@@ -63,7 +60,10 @@
   </div>
 </div>
 
-  
+<!-- Bouton flottant au-dessus du plateau -->
+<div id="top-bar">
+  <button id="save-button">💾 Enregistrer</button>
+</div>  
 
   <!-- ✅ CORBEILLE -->
   <div id="trash-zone" class="hidden">
