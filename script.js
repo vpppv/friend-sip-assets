@@ -213,5 +213,3 @@ if (savedConfig.length > 0) {
     cell.appendChild(clone);
   });
 
-  
-});
