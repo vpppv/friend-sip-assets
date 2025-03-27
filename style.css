@@ -7,14 +7,13 @@ body {
 
 .container {
   display: flex;
-  justify-content: center;
   align-items: flex-start;
   gap: 40px;
   padding: 40px;
   max-width: 1200px;
   margin: auto;
-  flex-wrap: wrap;
 }
+
 
 /* === MINI-JEUX À GAUCHE === */
 #mini-games {
