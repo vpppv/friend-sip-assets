@@ -152,4 +152,65 @@ gameElement.addEventListener('click', () => {
       popup.style.display = "none";
     });
   }
+// === SAUVEGARDE DU PLATEAU ===
+const saveButton = document.getElementById('save-button');
+
+// Sauvegarde la position des jeux
+saveButton.addEventListener('click', () => {
+  const config = [];
+  const boardCells = document.querySelectorAll('.board-cell');
+
+  boardCells.forEach((cell, index) => {
+    const game = cell.querySelector('.mini-game');
+    if (game) {
+      config.push({ index, id: game.style.backgroundImage });
+    }
+  });
+
+  localStorage.setItem('boardConfig', JSON.stringify(config));
+
+  // Animation visuelle
+  saveButton.textContent = '✅ Sauvegardé';
+  saveButton.classList.add('saved');
+  setTimeout(() => {
+    saveButton.textContent = '💾 Enregistrer';
+    saveButton.classList.remove('saved');
+  }, 2000);
+});
+
+// Recharge automatique à l'ouverture
+const savedConfig = JSON.parse(localStorage.getItem('boardConfig') || '[]');
+if (savedConfig.length > 0) {
+  const boardCells = document.querySelectorAll('.board-cell');
+  savedConfig.forEach(item => {
+    const cell = boardCells[item.index];
+    const clone = document.createElement('div');
+    clone.className = 'mini-game';
+    clone.style.backgroundImage = item.id;
+    clone.setAttribute('draggable', true);
+    clone.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('custom-game', '');
+      clone.classList.add('dragging');
+      trashZone.classList.add('visible');
+
+      const dragIcon = clone.cloneNode(true);
+      dragIcon.style.position = "absolute";
+      dragIcon.style.top = "-999px";
+      dragIcon.style.left = "-999px";
+      document.body.appendChild(dragIcon);
+      e.dataTransfer.setDragImage(dragIcon, 40, 40);
+      setTimeout(() => dragIcon.remove(), 0);
+    });
+    clone.addEventListener('dragend', () => {
+      trashZone.classList.remove('visible');
+      clone.classList.remove('dragging');
+    });
+    if (cell.firstChild) {
+      cell.removeChild(cell.firstChild);
+    }
+    cell.appendChild(clone);
+  });
+}
+
+  
 });
