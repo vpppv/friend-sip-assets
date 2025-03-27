@@ -52,12 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => dragIcon.remove(), 0);
     });
 
-    miniGamesList.appendChild(gameElement);
-
     // ✅ Clique pour masquer la règle
 gameElement.addEventListener('click', () => {
   gameElement.classList.add('clicked');
 });
+
+        miniGamesList.appendChild(gameElement);
+ }); 
 
   const boardCells = document.querySelectorAll('.board-cell');
 
