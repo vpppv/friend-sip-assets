@@ -211,5 +211,6 @@ if (savedConfig.length > 0) {
       cell.removeChild(cell.firstChild);
     }
     cell.appendChild(clone);
+   }
   });
 
