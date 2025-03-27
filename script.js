@@ -195,22 +195,26 @@ if (savedConfig.length > 0) {
       clone.classList.add('dragging');
       trashZone.classList.add('visible');
 
-      const dragIcon = clone.cloneNode(true);
-      dragIcon.style.position = "absolute";
-      dragIcon.style.top = "-999px";
-      dragIcon.style.left = "-999px";
-      document.body.appendChild(dragIcon);
-      e.dataTransfer.setDragImage(dragIcon, 40, 40);
-      setTimeout(() => dragIcon.remove(), 0);
-    });
-    clone.addEventListener('dragend', () => {
-      trashZone.classList.remove('visible');
-      clone.classList.remove('dragging');
-    });
-    if (cell.firstChild) {
-      cell.removeChild(cell.firstChild);
-    }
-    cell.appendChild(clone);
-   }
+          const dragIcon = clone.cloneNode(true);
+    dragIcon.style.position = "absolute";
+    dragIcon.style.top = "-999px";
+    dragIcon.style.left = "-999px";
+    document.body.appendChild(dragIcon);
+    e.dataTransfer.setDragImage(dragIcon, 40, 40);
+    setTimeout(() => dragIcon.remove(), 0);
   });
+
+  clone.addEventListener('dragend', () => {
+    trashZone.classList.remove('visible');
+    clone.classList.remove('dragging');
+  });
+
+  // ✅ Empêche le drop si la case est déjà occupée
+  if (cell.firstChild) {
+    return;
+  }
+
+  cell.appendChild(clone);
+});
+
 
