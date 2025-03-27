@@ -215,6 +215,8 @@ if (savedConfig.length > 0) {
   }
 
   cell.appendChild(clone);
-});
+ }); // <--- ferme le forEach du savedConfig
+} // <--- ferme le if (savedConfig.length > 0)
+}); // <--- ferme le DOMContentLoaded
 
 
