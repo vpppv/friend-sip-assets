@@ -24,18 +24,39 @@ document.addEventListener('DOMContentLoaded', () => {
     input.accept = 'image/*';
 
     const uploadedImg = document.createElement('img');
-    upload.appendChild(input);
-    upload.appendChild(uploadedImg);
-    line.appendChild(upload);
+    const fileName = document.createElement('div');
+    fileName.className = 'file-name';
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.innerHTML = '🗑️';
+    deleteBtn.style.display = 'none';
+
+    const resetUpload = () => {
+      uploadedImg.src = '';
+      uploadedImg.style.display = 'none';
+      fileName.textContent = '';
+      deleteBtn.style.display = 'none';
+      upload.innerHTML = '';
+      upload.textContent = 'Importer / dropper une photo';
+      upload.appendChild(input);
+      upload.appendChild(uploadedImg);
+      upload.appendChild(fileName);
+      upload.appendChild(deleteBtn);
+    };
 
     const handleFile = (file) => {
       const reader = new FileReader();
       reader.onload = () => {
         uploadedImg.src = reader.result;
         uploadedImg.style.display = 'block';
+        fileName.textContent = file.name;
+        deleteBtn.style.display = 'inline-block';
         upload.textContent = '';
         upload.appendChild(input);
         upload.appendChild(uploadedImg);
+        upload.appendChild(fileName);
+        upload.appendChild(deleteBtn);
       };
       reader.readAsDataURL(file);
     };
@@ -45,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (file) handleFile(file);
     });
 
-    // Ajout drag & drop
     upload.addEventListener('dragover', (e) => {
       e.preventDefault();
       upload.classList.add('dragging');
@@ -63,6 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
         handleFile(file);
       }
     });
+
+    deleteBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      resetUpload();
+    });
+
+    uploadedImg.style.display = 'none';
+    upload.appendChild(input);
+    upload.appendChild(uploadedImg);
+    upload.appendChild(fileName);
+    upload.appendChild(deleteBtn);
+    line.appendChild(upload);
 
     const textZone = document.createElement('div');
     textZone.className = 'text-input';
