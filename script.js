@@ -217,6 +217,52 @@ if (savedConfig.length > 0) {
   cell.appendChild(clone);
  }); // <--- ferme le forEach du savedConfig
 } // <--- ferme le if (savedConfig.length > 0)
+
+  const nextStepBtn = document.getElementById('next-step-button');
+
+function checkBoardCompletion() {
+  const boardCells = document.querySelectorAll('.board-cell');
+  const filled = Array.from(boardCells).filter(cell => cell.querySelector('.mini-game'));
+  const total = boardCells.length;
+
+  if (filled.length === total) {
+    nextStepBtn.classList.add('active');
+    nextStepBtn.disabled = false;
+    nextStepBtn.style.cursor = "pointer";
+  } else {
+    nextStepBtn.classList.remove('active');
+    nextStepBtn.disabled = true;
+    nextStepBtn.style.cursor = "not-allowed";
+  }
+}
+
+// Vérifie à chaque drop
+boardCells.forEach(cell => {
+  cell.addEventListener('drop', () => {
+    setTimeout(checkBoardCompletion, 100);
+  });
+});
+
+// Vérifie au chargement
+checkBoardCompletion();
+
+// Clique sur "Étape suivante"
+nextStepBtn.addEventListener('click', () => {
+  const config = [];
+  const boardCells = document.querySelectorAll('.board-cell');
+
+  boardCells.forEach((cell, index) => {
+    const game = cell.querySelector('.mini-game');
+    if (game) {
+      config.push({ index, id: game.style.backgroundImage });
+    }
+  });
+
+  localStorage.setItem('boardConfig', JSON.stringify(config));
+  window.location.href = 'personnalisation.html';
+});
+
+  
 }); // <--- ferme le DOMContentLoaded
 
 
