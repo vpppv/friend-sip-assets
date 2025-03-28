@@ -112,7 +112,16 @@ body {
 
 /* ✅ Nouveau fond légèrement assombri */
 .popup-overlay {
-  background: rgba(0, 0, 0, 0.5); /* Avant : 0.7 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fond plus doux */
+  z-index: 9999; /* 🔥 Superposition assurée */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ✅ Popup modernisée */
@@ -123,6 +132,9 @@ body {
   text-align: center;
   max-width: 560px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  z-index: 10000;
+
 }
 
 .popup h2 {
