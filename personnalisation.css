@@ -94,11 +94,14 @@ h1 {
 
 .text-input textarea {
   resize: none;
-  padding: 10px;
+  padding: 17px 10px; /* ↑ + ↓ pour centrer verticalement */
   font-size: 14px;
   border-radius: 6px;
   border: 1px solid #ccc;
   max-height: 60px;
+  height: 60px; /* pour forcer la hauteur */
+  line-height: 1.2;
+  font-family: inherit;
 }
 
 .char-count {
