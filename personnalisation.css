@@ -27,6 +27,12 @@ h1 {
   cursor: pointer;
   transition: background 0.3s ease;
 }
+#save-button {
+  background-color: #dddddd; 
+}
+#save-button:hover {
+  background-color: #bbbbbb;
+}
 
 #top-bar button:hover {
   background-color: #4444ff;
