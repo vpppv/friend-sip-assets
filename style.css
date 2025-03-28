@@ -317,7 +317,8 @@ body {
 .next-step-container {
   display: flex;
   justify-content: flex-end;
-  margin: 20px 40px 0 0; /* marge plus rapprochée du plateau */
+  margin-top: 20px;
+  margin-right: 40px;
 }
 
 #next-step-button {
