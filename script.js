@@ -221,7 +221,7 @@ if (savedConfig.length > 0) {
   const nextStepBtn = document.getElementById('next-step-button');
 
 function checkBoardCompletion() {
-  const boardCells = document.querySelectorAll('.board-cell');
+  const boardCells = document.querySelectorAll('.board-cell:not([data-fixed="true"])');
   const filled = Array.from(boardCells).filter(cell => cell.querySelector('.mini-game'));
   const total = boardCells.length;
 
