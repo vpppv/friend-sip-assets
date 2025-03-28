@@ -36,8 +36,6 @@
 
 <div class="container">
 
-  <p class="mini-games-instruction">Glisse 15 mini-jeux sur le plateau pour passer à l’étape suivante</p>
-
   <!-- ✅ MINI-JEUX À GAUCHE -->
   <div id="mini-games"></div>
 
@@ -78,16 +76,24 @@
     </div>
   </div>
     </div
+      
 <!-- ✅ NOUVELLE BARRE D'ACTION EN HAUT À DROITE -->
-<div id="top-bar">
-  <button id="save-button">
-  💾
-  <span class="tooltip-text">Enregistrer</span>
-</button>
-  <button id="next-step-button" disabled>Étape suivante</button>
-</div>
+<div class="top-bar-wrapper">
+  <div class="instruction-wrapper">
+    <p class="mini-games-instruction">
+      Glisse 15 mini-jeux sur le plateau pour passer à l’étape suivante
+    </p>
+  </div>
+
+  <div id="top-bar">
+    <button id="save-button">
+      💾
+      <span class="tooltip-text">Enregistrer</span>
+    </button>
+    <button id="next-step-button" disabled>Étape suivante</button>
   </div>
 </div>
+
 
 
   <!-- ✅ CORBEILLE -->
