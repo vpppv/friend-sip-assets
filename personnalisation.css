@@ -71,6 +71,7 @@ h1 {
   background-color: #f9f9f9;
   cursor: pointer;
   position: relative;
+  color: #ecebeb; /* ✅ Gris clair élégant */
 }
 
 .image-upload input {
