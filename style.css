@@ -314,6 +314,12 @@ body {
   margin: 60px 0 20px;
 }
 
+.next-step-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 40px 60px;
+}
+
 #next-step-button {
   background-color: #6a5cff;
   color: white;
@@ -334,4 +340,5 @@ body {
 #next-step-button:hover:enabled {
   background-color: #574ce6;
 }
+
 
