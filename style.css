@@ -338,4 +338,42 @@ body {
   background-color: #574ce6;
 }
 
+#save-button {
+  position: relative;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  background-color: rgba(106, 92, 255, 0.9); /* violet transparent */
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(106, 92, 255, 0.9) transparent transparent transparent;
+}
+
+#save-button:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
 
