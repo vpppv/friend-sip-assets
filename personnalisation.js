@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 💬 Placeholder personnalisé pour le champ de texte
     const placeholder = document.createElement('div');
     placeholder.className = 'custom-placeholder';
-    placeholder.textContent = 'Personnalise le titre du mini-jeux';
+    placeholder.textContent = 'Personnalise le titre du mini-jeu';
     placeholder.style.display = textarea.value.length > 0 ? 'none' : 'block';
 
     // 🎯 Gestion du texte saisi
