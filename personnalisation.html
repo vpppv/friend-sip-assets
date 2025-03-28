@@ -6,14 +6,31 @@
   <link rel="stylesheet" href="personnalisation.css">
 </head>
 <body>
-  <div id="top-bar">
-    <button id="back-button">⬅ Retour au plateau</button>
-    <button id="save-button">💾 Enregistrer</button>
+
+  <!-- Titre de la page, centré -->
+  <h1>Personnalise tes mini-jeux</h1>
+
+  <!-- Conteneur principal de la page, limite la largeur et centre le contenu -->
+  <div id="customisation-container">
+
+    <!-- Barre du haut avec les deux boutons -->
+    <div id="top-bar">
+      <!-- Bouton à gauche : retour à la page précédente -->
+      <button id="back-button">⬅ Retour au plateau</button>
+
+      <!-- Bouton à droite : enregistrement des données -->
+      <button id="save-button">💾 Enregistrer</button>
+    </div>
+
+    <!-- Ce conteneur sera rempli dynamiquement en JavaScript avec les mini-jeux -->
+    <!-- Il contiendra les blocs de personnalisation : image + texte + compteur -->
+    
+    <!-- 👉 Les éléments seront injectés ici via JS : -->
+    <!-- container.appendChild(line) -->
   </div>
 
-  <h1>Personnalise tes mini-jeux</h1>
-  <div id="customisation-container"></div>
-
+  <!-- Script JavaScript pour générer la logique de personnalisation -->
   <script src="personnalisation.js"></script>
+
 </body>
 </html>
