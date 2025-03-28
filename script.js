@@ -138,6 +138,7 @@ if (dragging && dragging.parentElement.classList.contains('board-cell')) {
     const dragging = document.querySelector('.dragging');
     if (dragging && dragging.parentElement.classList.contains('board-cell')) {
       dragging.parentElement.removeChild(dragging);
+      checkBoardCompletion();
     }
     trashZone.classList.remove('drag-over');
     trashZone.classList.remove('visible');
