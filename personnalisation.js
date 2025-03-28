@@ -11,13 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const line = document.createElement('div');
     line.className = 'custom-line';
 
-    // Bloc image du mini-jeu
     const preview = document.createElement('div');
     preview.className = 'mini-preview';
     preview.style.backgroundImage = item.id;
     line.appendChild(preview);
 
-    // Zone d’upload / drag & drop
     const upload = document.createElement('label');
     upload.className = 'image-upload';
     upload.textContent = 'Importer / dropper une photo';
@@ -30,9 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     upload.appendChild(uploadedImg);
     line.appendChild(upload);
 
-    input.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
+    const handleFile = (file) => {
       const reader = new FileReader();
       reader.onload = () => {
         uploadedImg.src = reader.result;
@@ -42,9 +38,32 @@ document.addEventListener('DOMContentLoaded', () => {
         upload.appendChild(uploadedImg);
       };
       reader.readAsDataURL(file);
+    };
+
+    input.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) handleFile(file);
     });
 
-    // Zone de texte
+    // Ajout drag & drop
+    upload.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      upload.classList.add('dragging');
+    });
+
+    upload.addEventListener('dragleave', () => {
+      upload.classList.remove('dragging');
+    });
+
+    upload.addEventListener('drop', (e) => {
+      e.preventDefault();
+      upload.classList.remove('dragging');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        handleFile(file);
+      }
+    });
+
     const textZone = document.createElement('div');
     textZone.className = 'text-input';
     const textarea = document.createElement('textarea');
@@ -65,12 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(line);
   });
 
-  // Enregistrement
   document.getElementById('save-button').addEventListener('click', () => {
     const lines = document.querySelectorAll('.custom-line');
     const results = [];
 
-    lines.forEach((line, index) => {
+    lines.forEach((line) => {
       const image = line.querySelector('img')?.src || null;
       const text = line.querySelector('textarea')?.value || '';
       results.push({ image, text });
@@ -80,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     alert('✅ Données enregistrées !');
   });
 
-  // Retour
   document.getElementById('back-button').addEventListener('click', () => {
     window.location.href = 'index.html';
   });
