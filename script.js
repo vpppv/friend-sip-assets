@@ -173,10 +173,10 @@ saveButton.addEventListener('click', () => {
   localStorage.setItem('boardConfig', JSON.stringify(config));
 
   // Animation visuelle
-  saveButton.textContent = '✅ Sauvegardé';
+  saveButton.textContent = 'Enregistré';
   saveButton.classList.add('saved');
   setTimeout(() => {
-    saveButton.textContent = '💾 Enregistrer';
+    saveButton.textContent = '💾';
     saveButton.classList.remove('saved');
   }, 2000);
 });
