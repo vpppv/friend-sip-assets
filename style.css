@@ -309,3 +309,29 @@ body {
   color: white;
 }
 
+.next-step-wrapper {
+  text-align: center;
+  margin: 60px 0 20px;
+}
+
+#next-step-button {
+  background-color: #6a5cff;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: not-allowed;
+  opacity: 0.4;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+#next-step-button.active {
+  cursor: pointer;
+  opacity: 1;
+}
+
+#next-step-button:hover:enabled {
+  background-color: #574ce6;
+}
+
