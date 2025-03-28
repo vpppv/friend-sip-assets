@@ -147,7 +147,7 @@ h1 {
   position: absolute;
   pointer-events: none;
   color: #9f9c9c;
-  font-size: 14px;
+  font-size: inherit;
   padding: 10px;
   top: 0;
   left: 0;
