@@ -155,7 +155,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     localStorage.setItem('customCases', JSON.stringify(results));
-    alert('✅ Données enregistrées !');
+    const saveButton = document.getElementById('save-button');
+const originalText = saveButton.textContent;
+const originalBg = saveButton.style.backgroundColor;
+
+// Mise à jour du bouton
+saveButton.textContent = 'Enregistré !';
+saveButton.style.backgroundColor = '#00c853'; // 💚 vert succès
+
+// Revenir à l'état initial après 2.5s
+setTimeout(() => {
+  saveButton.textContent = originalText;
+  saveButton.style.backgroundColor = originalBg;
+}, 2500);
   });
 
   // ⬅️ Bouton Retour
